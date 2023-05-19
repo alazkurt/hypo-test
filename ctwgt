@@ -1,0 +1,20 @@
+import scipy.stats as stats
+import pandas as pd
+
+# Assuming 'df' is your DataFrame with the birth weight data
+# and 'CBWGT' is the column containing the weights
+weight_data = df['CBWGT']
+
+# Separating the weights by gender (assuming 'gender' column represents gender)
+boys_weights = weight_data[df['gender'] == 'Boy']
+girls_weights = weight_data[df['gender'] == 'Girl']
+
+# Performing the two-sample t-test
+t_statistic, p_value = stats.ttest_ind(boys_weights, girls_weights, alternative='greater')
+
+# Comparing the p-value with the significance level
+alpha = 0.05
+if p_value < alpha:
+    print("Reject null hypothesis - There is evidence that boys' birth weights are greater than girls' birth weights.")
+else:
+    print("Fail to reject null hypothesis - There is no evidence that boys' birth weights are greater than girls' birth weights.")
